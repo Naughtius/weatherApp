@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import CityWeather from '../CityWeather';
 
-import openWeatherService from '../../services/openWeatherService';
+import CityWeather from '../CityWeather';
+import Header from '../Header';
+import ItemList from '../ItemList';
 
 export default class App extends Component {
 
-	openWeatherService = new openWeatherService();
-
 	render() {
 		return(
-			<div>
-				<CityWeather />
+			<div className="container">
+				<div className="row">
+					<Header />
+					<ItemList />
+					<CityWeather />
+				</div>
 			</div>
 		)
 	}

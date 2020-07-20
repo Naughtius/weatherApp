@@ -1,0 +1,8 @@
+nav {
+    background-color: #F6A622;
+    border-radius: 10px;
+}
+
+.input-field input[type=search]:focus:not(.browser-default) {
+    border-radius: 10px;
+}

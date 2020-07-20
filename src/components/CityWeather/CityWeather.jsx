@@ -9,14 +9,57 @@ export default class CityWeather extends Component {
 	openWeatherService = new openWeatherService();
 
 	state = {
-		city: null
-	}
+		city: {}
+	};
+
+	componentDidMount() {
+        this.updatePerson();
+    };
+
+	updatePerson() {
+        this.openWeatherService.getCity('Kazan').then(city => {
+            this.setState({ 
+                city
+            });
+        });
+    };
 
 	render() {
-		console.log(this.openWeatherService.getCity('Kazan'));
+		const { city } = this.state;
+
 		return(
-			<div>123</div>
+			<CityView city={ city } />
 		)
 	}
 
 }
+
+const CityView = ({ city }) => {
+
+	const { clouds, coord_el, coord_nl, feels_like, id, language, name, temp, temp_max, temp_min } = city;
+
+	const k2c = k => k - 273.15; // from kelvin to celsius (temperature)
+
+	console.log(clouds, coord_el, coord_nl, feels_like, id, language, name, temp, temp_max, temp_min);
+	const temperature = k2c(temp);
+
+    return (
+        <React.Fragment>
+			<div className="city" id="city">
+				<div class="col s8">
+					<div className="city-wrap">
+						<div className="city-info">
+							<span className="city-info__temperature">
+								{ temperature } &#176;
+							</span>
+							<span className="city-info__name">
+								{ name }
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+        </React.Fragment>
+    );
+
+};

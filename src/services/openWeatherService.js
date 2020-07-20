@@ -19,16 +19,16 @@ export default class openWeatherService {
 	  
 	_transformCity = (city) => {
 		return {
-				id: city.id,
-				name: city.name,
-				temp: city.main.temp,
-				temp_max: city.main.temp_max,
-				temp_min: city.main.temp_min,
-				feels_like: city.main.feels_like,
-				coord_nl: city.coord.lat,
-				coord_el: city.coord.lon,
-				clouds: city.clouds.all,
-				language: city.sys.country
+			id: city.id,
+			name: city.name,
+			temp: city.main.temp,
+			temp_max: city.main.temp_max,
+			temp_min: city.main.temp_min,
+			feels_like: city.main.feels_like,
+			coord_nl: city.coord.lat,
+			coord_el: city.coord.lon,
+			clouds: city.clouds.all,
+			language: city.sys.country
 		}
 	}
 
