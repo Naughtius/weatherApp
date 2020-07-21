@@ -13,7 +13,7 @@ export default class CityWeather extends Component {
 	};
 
 	componentDidMount() {
-        this.updatePerson();
+		  this.updatePerson();
     };
 
 	updatePerson() {
@@ -46,7 +46,7 @@ const CityView = ({ city }) => {
     return (
         <React.Fragment>
 			<div className="city" id="city">
-				<div class="col s8">
+				<div className="col s8">
 					<div className="city-wrap">
 						<div className="city-info">
 							<span className="city-info__temperature">

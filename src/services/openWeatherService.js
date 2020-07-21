@@ -1,3 +1,5 @@
+import allСities from './city.list.json'; 
+
 export default class openWeatherService {
 
 	_apiKey = '&appid=e38f15bedcd1a0097502d74d5fb90e97';
@@ -12,9 +14,13 @@ export default class openWeatherService {
 		return await res.json();
 	}
 
-	getCity = async (name) => {
-		const person = await this.getResource(name);
-		return this._transformCity(person);
+	getAllCity = () => {
+		return allСities;
+	}
+
+	getCity = async (cityName) => {
+		const city = await this.getResource(cityName);
+		return this._transformCity(city);
 	};
 	  
 	_transformCity = (city) => {

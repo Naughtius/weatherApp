@@ -17,7 +17,7 @@ export default class App extends Component {
 					<CityWeather />
 				</div>
 			</div>
-		)
-	}
+		);
+	};
 
-}
+};
