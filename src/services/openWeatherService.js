@@ -15,7 +15,7 @@ export default class openWeatherService {
 	}
 
 	getAllCity = () => {
-		return allСities;
+		return this.sortArr(allСities);
 	}
 
 	getCity = async (cityName) => {
@@ -24,10 +24,12 @@ export default class openWeatherService {
 	};
 	  
 	_transformCity = (city) => {
+		const k2c = k => k - 273.15;
+
 		return {
 			id: city.id,
 			name: city.name,
-			temp: city.main.temp,
+			temp: Math.round(k2c(city.main.temp)),
 			temp_max: city.main.temp_max,
 			temp_min: city.main.temp_min,
 			feels_like: city.main.feels_like,
@@ -36,6 +38,10 @@ export default class openWeatherService {
 			clouds: city.clouds.all,
 			language: city.sys.country
 		}
+	}
+
+	sortArr = (arr) => {
+		return arr.sort((a, b) => a.name !== b.name ? a.name < b.name ? -1 : 1 : 0);
 	}
 
 }

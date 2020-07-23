@@ -3,54 +3,72 @@ import React, { Component } from 'react';
 import './CityWeather.css';
 
 import openWeatherService from '../../services/openWeatherService';
+import ErrorIndicator from '../ErrorIndicator';
 
 export default class CityWeather extends Component {
 
 	openWeatherService = new openWeatherService();
 
 	state = {
-		city: {}
+		city: {},
+		hasError: false
 	};
 
 	componentDidMount() {
-		  this.updatePerson();
-    };
+		this.updateCity();
+	};
+	
 
-	updatePerson() {
-        this.openWeatherService.getCity('Kazan').then(city => {
-            this.setState({ 
-                city
-            });
-        });
-    };
+	componentDidUpdate(prevProps) {
+		if (this.props.selectedCity !== prevProps.selectedCity) {
+			this.updateCity();
+		}
+	};
+
+	updateCity() {
+
+		const { selectedCity } = this.props;
+
+		this.openWeatherService.getCity(selectedCity).then(city => {
+			this.setState({ 
+				city
+			});
+		}).catch(this.onError);
+	};
+
+	onError = (err) => {
+		this.setState({
+				hasError: true
+		});
+  };
 
 	render() {
-		const { city } = this.state;
+		const { city, hasError } = this.state;
+
+		const errorMessage = hasError ? <ErrorIndicator /> : null;
 
 		return(
-			<CityView city={ city } />
-		)
-	}
+			<div>
+				{ errorMessage }
+				<CityView city={ city } />
+			</div>
+		);
+	};
 
-}
+};
 
 const CityView = ({ city }) => {
 
-	const { clouds, coord_el, coord_nl, feels_like, id, language, name, temp, temp_max, temp_min } = city;
+	const { name, temp } = city;
 
-	const k2c = k => k - 273.15; // from kelvin to celsius (temperature)
-
-	console.log(clouds, coord_el, coord_nl, feels_like, id, language, name, temp, temp_max, temp_min);
-	const temperature = k2c(temp);
-
-    return (
-        <React.Fragment>
+	return (
+		<React.Fragment>
 			<div className="city" id="city">
 				<div className="col s8">
 					<div className="city-wrap">
 						<div className="city-info">
 							<span className="city-info__temperature">
-								{ temperature } &#176;
+								{ temp } &#176;
 							</span>
 							<span className="city-info__name">
 								{ name }
@@ -59,7 +77,7 @@ const CityView = ({ city }) => {
 					</div>
 				</div>
 			</div>
-        </React.Fragment>
-    );
+		</React.Fragment>
+	);
 
 };
