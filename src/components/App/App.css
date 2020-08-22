@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+   .row {
+      display: flex;
+      flex-direction: column;
+   }
+   .row .col {
+      width: 100% !important;
+   }
+}

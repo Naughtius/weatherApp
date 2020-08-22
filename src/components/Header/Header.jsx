@@ -1,53 +1,39 @@
-import React, { Component } from 'react';
+import React from "react";
 
-import './Header.css';
+import "./Header.css";
 
-export default class Header extends Component {
+const Header = () => {
+   const dateNow = () => {
+      const date = new Date();
 
-    dateNow = () => {
+      const options = {
+         month: "long",
+         day: "numeric",
+         weekday: "long",
+         timezone: "UTC",
+      };
 
-        const date = new Date();
-    
-        const options = {
-            month: 'long',
-            day: 'numeric',
-            weekday: 'long',
-            timezone: 'UTC',
-        };
-    
-        return date.toLocaleString("ru", options).toUpperCase();
-    
-    }
+      return date.toLocaleString("ru", options).toUpperCase();
+   };
 
-    render() {
+   const date = dateNow();
 
-        const date = this.dateNow();
-
-        return(
-            <div className="header" id="header">
-                <nav className="orange lighten-1">
-                    <div className="nav-wrapper">
-                        <a href="/" className="brand-logo center">
-                            WeatherApp
-                        </a>
-                        <ul id="nav-mobile" className="left hide-on-med-and-down">
-                            <li>
-                                <a href="/">
-                                    <i className="material-icons">more_vert</i>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul className="right hide-on-med-and-down">
-                            <li className="logo">
-                                <a href="/">
-                                    {date}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+   return (
+      <div className="header" id="header">
+         <nav className="orange lighten-1">
+            <div className="nav-wrapper">
+               <a href="/" className="brand-logo left">
+                  WeatherApp
+               </a>
+               <ul className="right">
+                  <li className="logo">
+                     <a href="/">{date}</a>
+                  </li>
+               </ul>
             </div>
-        );
-    };
-
+         </nav>
+      </div>
+   );
 };
+
+export default Header;

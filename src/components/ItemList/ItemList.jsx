@@ -1,90 +1,93 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './ItemList.css';
+import "./ItemList.css";
 
-import openWeatherService from '../../services/openWeatherService';
-import ErrorIndicator from '../ErrorIndicator';
-
+import openWeatherService from "../../services/openWeatherService";
+import SearchPanel from "../SearchPanel";
 export default class ItemList extends Component {
+   openWeatherService = new openWeatherService();
 
-	openWeatherService = new openWeatherService();
+   constructor(props) {
+      super(props);
 
-	constructor(props) {
-		super(props);
+      this.state = {
+         findCity: [],
+         term: "",
+      };
+   }
 
-		this.state = {
-			findCity: [],
-			term: '',
-			hasError: false
-		};
+   renderItems = (arr) => {
+      return arr.map((item) => {
+         return (
+            <div
+               className="search-item"
+               onClick={() => this.props.chooseCity(item.name)}
+               key={item.id}
+            >
+               {item.name}
+            </div>
+         );
+      });
+   };
 
-	}
+   handleSubmit = (event) => {
+      event.preventDefault();
 
-	renderItems = (arr) => {
-		return arr.map(item => {
-			return <div className="search-item" onClick={() => this.props.chooseCity(item.name)} key={ item.id }>{ item.name }</div>
-		});
-	};
+      const { cityList } = this.props,
+         { term } = this.state;
+      const findCity = [];
 
-	handleSubmit = (event) => {
-		event.preventDefault();
-		
-		const { cityList } = this.props;
-		const { term, hasError } = this.state;
-		const findCity = [];
+      findCity.push(this.binarySearch(cityList, term, 0, cityList.length - 1));
 
-		cityList.filter(item => {
-			if (item.name.toLowerCase().indexOf(term.toLowerCase()) > -1) {
-				findCity.push(item);
-			} else {
-				this.setState({hasError: !hasError});
-			}
-			
-			this.setState({
-				findCity
-			});
+      this.setState({ findCity });
+   };
 
-			return true;
-		});
-		  
-	}
+   binarySearch = (data, target, start, end) => {
+      if (end < 1) return data[0];
+      const middle = Math.floor(start + (end - start) / 2);
 
-	onSearchChange = (e) => {
-		this.setState({
-			term: e.target.value
-		});
-	};
+      if (target.toLowerCase() === data[middle].name.toLowerCase())
+         return data[middle];
 
-	render() {
-		const { findCity, hasError } = this.state;
+      if (end - 1 === start)
+         return Math.abs(
+            data[start].name.toLowerCase() - target.toLowerCase()
+         ) > Math.abs(data[end].name.toLowerCase() - target.toLowerCase())
+            ? data[end]
+            : data[start];
 
-		const items = this.renderItems(findCity);
-		const errorMessage = hasError ? <ErrorIndicator /> : null;
-		const visibleItems = !hasError ? items : null;
+      if (target.toLowerCase() > data[middle].name.toLowerCase())
+         return this.binarySearch(data, target, middle, end);
+      if (target.toLowerCase() < data[middle].name.toLowerCase())
+         return this.binarySearch(data, target, start, middle);
+   };
 
-		return(
-			<div className="search" id="search">
-				<div className="col s4">
-					<nav>
-						<div className="nav-wrapper">
-						<form onSubmit={this.handleSubmit}>
-							<div className="input-field">
-									<input id="search" type="search" value={ this.state.term } onChange={ this.onSearchChange } required />
-									<label className="label-icon" htmlFor="search">
-										<i className="material-icons">search</i>
-									</label>
-									<i className="material-icons">close</i>
-								</div>
-							</form>
-						</div>
-					</nav>
-					<div className="search-items">
-						{ errorMessage }
-						{ visibleItems }
-					</div>
-				</div>
-			</div>
-		)
-	}
+   onSearchChange = (e) => {
+      this.setState({
+         term: e.target.value,
+      });
+   };
 
+   render() {
+      const { findCity, term } = this.state;
+
+      const items = this.renderItems(findCity);
+
+      return (
+         <div className="search" id="search">
+            <div className="col s4">
+               <nav>
+                  <div className="nav-wrapper">
+                     <SearchPanel
+                        term={term}
+                        handleSubmit={this.handleSubmit}
+                        onSearchChange={this.onSearchChange}
+                     />
+                  </div>
+               </nav>
+               <div className="search-items">{items}</div>
+            </div>
+         </div>
+      );
+   }
 }

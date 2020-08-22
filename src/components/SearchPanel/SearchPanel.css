@@ -1,0 +1,17 @@
+.input-field input[type="search"]:focus:not(.browser-default),
+.nav-wrapper .input-field input[type="search"] {
+   border-radius: 10px;
+}
+
+.input-field input[type="search"]:focus:not(.browser-default) {
+   color: black;
+}
+
+.nav-wrapper .input-field input[type="search"] {
+   color: white;
+}
+
+.nav-wrapper .input-field input[type="search"] {
+   padding: 0 3.5rem;
+   width: calc(100% - 7rem);
+}

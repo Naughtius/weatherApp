@@ -1,8 +1,12 @@
 nav ul a {
-    font-size: 1.2rem;
-    font-family: monospace;
+   font-size: 1.2rem;
+   font-family: monospace;
 }
 
 .header {
-    padding-bottom: 50px;
+   padding-bottom: 20px;
+}
+
+.brand-logo.left {
+   padding: 0 15px;
 }

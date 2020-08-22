@@ -1,26 +1,23 @@
 nav {
-    background-color: #F6A622;
-    border-radius: 10px;
-}
-
-.input-field input[type=search]:focus:not(.browser-default) {
-    border-radius: 10px;
+   background-color: #312d8a;
+   border-radius: 10px;
 }
 
 .search-item {
-	height: 40px;
-	width: 100%;
-	background: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 5px;
-	margin-top: 10px;
-	cursor: pointer;
-	transition: 0.3s all ease;
+   height: 40px;
+   width: 100%;
+   background: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   margin-top: 10px;
+   cursor: pointer;
+   transition: 0.3s all ease;
 }
 
 .search-item:hover {
-	background: #ffa726;
-	color: white;
+   background: #5f59c5;
+   color: white;
+   border: 3px solid #312d8a;
 }
